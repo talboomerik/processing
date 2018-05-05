@@ -28,8 +28,6 @@ class Building {
   Building() {
     setDimensionsOfBuilding();
     setLocation();
-    calculateBoundaries();
-    checkPark();
     setColor();
   }
 
@@ -40,8 +38,14 @@ class Building {
   }
 
   void setLocation() {
-    location = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
+    while (overlapWithPark()) {
+      location = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
+      calculateBoundaries();
+    }
+  }
 
+  void overlapWithPark() {                                                                      //gebaseerd op hoorcollege 6
+    return (park.isInside(minX, minY)||park.isInside(minX, maxY)||park.isInside(maxX, minY)||park.isInside(minX, minY));
   }
 
   void calculateBoundaries() {                                                             //gebaseerd op oefenzitting 4
@@ -120,16 +124,6 @@ class Building {
 
 
 
-
-  void checkPark() {                                                                      //gebaseerd op hoorcollege 6
-    
-    while (park.isInside(minX, minY)||park.isInside(minX, maxY)||park.isInside(maxX, minY)||park.isInside(minX, minY)) {
-      
-      location = road.getRandomLocation(width, height);
-      
-      calculateBoundaries();
-    }
-  }
 
 
 
