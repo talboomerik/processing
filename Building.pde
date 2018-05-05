@@ -85,18 +85,13 @@ class Building {
   }
 
 
-  boolean checkTouching(Building building) {
-    
+  boolean checkTouching(Building otherBuilding) {
     touching = false;
 
     if (building != this) {
-      
-      Building newBuilding = building;
-      
-      float distance = dist(this.centerOfBuilding.x, this.centerOfBuilding.y, newBuilding.centerOfBuilding.x, newBuilding.centerOfBuilding.y); //formule uit Nature of code
+      float distance = dist(this.centerOfBuilding.x, this.centerOfBuilding.y, otherBuilding.centerOfBuilding.x, otherBuilding.centerOfBuilding.y); //formule uit Nature of code
       
       if (distance < height) {
-        
         touching = true;
       } 
       
@@ -104,32 +99,25 @@ class Building {
         touching = false;
       }
     }
-    
     return touching;
   }
 
-
-
-
-
-
-  void render() {
-    
+  void updateCapacity() {
     for (Citizen citizen : citizens) {
-      
       if (checkInside(citizen)) {
-        
-        if (depth< 200) {
-          
-          depth +=0.04;
-        } 
-        
+        if (depth < 200) {
+            depth += 0.04;
+        }
         else {
-          
-          depth= 200;
+            depth= 200;
         }
       }
     }
+  }
+
+  void render() {
+    
+    updateCapacity();
 
     for (Building building : buildings) {
       
