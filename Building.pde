@@ -20,8 +20,6 @@ class Building {
   float front;
   float back;
 
-  boolean citizenInBuilding;
-
   color fillColor;
   color borderColor;
 
@@ -59,17 +57,15 @@ class Building {
 
 
   boolean checkInside(Citizen citizen) {                                                         //gebaseerd op oefenzitting 4
-    
-    citizenInBuilding = false; 
    
     if (citizen.location.x > left && citizen.location.x < right &&
       citizen.location.y > bottom && citizen.location.y < top &&
       citizen.location.z > front && citizen.location.z < back) {
       
-        citizenInBuilding = true;
+        return true;
     }
     
-    return citizenInBuilding;
+    return false;
   }
 
 
