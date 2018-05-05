@@ -54,13 +54,13 @@ class Building {
   }
 
 
-  boolean checkInside(Citizen c) {                                                         //gebaseerd op oefenzitting 4
+  boolean checkInside(Citizen citizen) {                                                         //gebaseerd op oefenzitting 4
     
     citizenInBuilding = false; 
    
-    if (c.location.x > minX && c.location.x < maxX &&
-      c.location.y > minY && c.location.y < maxY &&
-      c.location.z > minZ && c.location.z < maxZ) {
+    if (citizen.location.x > minX && citizen.location.x < maxX &&
+      citizen.location.y > minY && citizen.location.y < maxY &&
+      citizen.location.z > minZ && citizen.location.z < maxZ) {
       
         citizenInBuilding = true;
     }
