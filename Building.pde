@@ -22,14 +22,12 @@ class Building {
 
   boolean citizenInBuilding;
 
-  color c;
-  color s;
+  color fillColor;
+  color borderColor;
 
   Building() {
     setDimensionsOfBuilding();
-
-    location = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
-
+    setLocation();
     calculateBoundaries();
     checkPark();
     setColor();
@@ -41,9 +39,12 @@ class Building {
     depth = random(minimumZ, maximumZ);
   }
 
+  void setLocation() {
+    location = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
+
+  }
 
   void calculateBoundaries() {                                                             //gebaseerd op oefenzitting 4
-    
     minX = location.x - width/2;
     maxX = location.x + width/2;
     minY = location.y - height/2;
@@ -51,7 +52,6 @@ class Building {
     minZ = location.z - depth/2;
     maxZ = location.z + depth/2;
   }
-
 
 
   boolean checkInside(Citizen c) {                                                         //gebaseerd op oefenzitting 4
@@ -76,20 +76,20 @@ class Building {
     
     if (r<0.4) {
       
-      c = #BABAC4;
-      s = #7E797A;
+      fillColor = #BABAC4;
+      borderColor = #7E797A;
     } 
     
     else if (r<0.6) {
       
-      c = #ff0000;
-      s = #902931;
+      fillColor = #ff0000;
+      borderColor = #902931;
     } 
     
     else { 
       
-      c = #2C20E3;
-      s = #3A3676;
+      fillColor = #2C20E3;
+      borderColor = #3A3676;
     }
   }
 
@@ -167,7 +167,7 @@ class Building {
     strokeWeight(1);
     pushMatrix();                        //gebaseerd op hoorcollege 7 
 
-    translate(loc.x, loc.y, d/2);          
+    translate(location.x, location.y, depth/2);
     box(width, height, depth);
     popMatrix();
   }
