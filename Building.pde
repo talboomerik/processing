@@ -115,9 +115,9 @@ class Building {
 
   void render() {
     
-    for (Citizen c : citizens) {
+    for (Citizen citizen : citizens) {
       
-      if (checkInside(c)) {
+      if (checkInside(citizen)) {
         
         if (depth< 200) {
           
@@ -142,8 +142,8 @@ class Building {
     }
 
 
-    fill(c);
-    stroke(s);
+    fill(fillColor);
+    stroke(borderColor);
     strokeWeight(1);
     pushMatrix();                        //gebaseerd op hoorcollege 7 
 
