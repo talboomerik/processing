@@ -57,42 +57,32 @@ class Building {
 
 
   boolean checkInside(Citizen citizen) {                                                         //gebaseerd op oefenzitting 4
-   boolean withinWidth = citizen.location.x > left && citizen.location.x < right ;
-   boolean withinHeight = citizen.location.y > bottom && citizen.location.y < top ;
-   boolean withinDepth = citizen.location.z > front && citizen.location.z < back ;
+    boolean withinWidth = citizen.location.x > left && citizen.location.x < right ;
+    boolean withinHeight = citizen.location.y > bottom && citizen.location.y < top ;
+    boolean withinDepth = citizen.location.z > front && citizen.location.z < back ;
 
-    if (withinWidth && withinHeight && withinDepth) {
-        return true;
-    }
-    
-    return false;
+    return (withinWidth && withinHeight && withinDepth);
   }
 
 
-
   void setColors() {                                                                       //inspiratie uit inleiding Nature of code
-    
     float r = random(1);
     
     if (r<0.4) {
-      
       fillColor = #BABAC4;
       borderColor = #7E797A;
     } 
     
     else if (r<0.6) {
-      
       fillColor = #ff0000;
       borderColor = #902931;
     } 
     
-    else { 
-      
+    else {
       fillColor = #2C20E3;
       borderColor = #3A3676;
     }
   }
-
 
 
   boolean checkTouching(Building building) {
