@@ -2,39 +2,36 @@ class Building {
 
   PVector loc;
 
-  float w;
-  float h;
-  float d;
+  float width;
+  float height;
+  float depth;
 
-  float minX;
   float minimumX = 40;
-  float maxX;
   float maximumX = 60;
-  float minY;
-  float minimumY = 60; 
-  float maxY;
+  float minimumY = 60;
   float maximumY = 80;
-  float minZ;
   float minimumZ = 80;
-  float maxZ;
   float maximumZ = 100;
 
+  float minX;
+  float maxX;
+  float minY;
+  float maxY;
+  float minZ;
+  float maxZ;
 
   boolean citizenInBuilding;
-
 
   color c;
   color s;
 
-
-
   Building() {
 
-    w = random(minimumX, maximumX);
-    h = random(minimumY, maximumY);
-    d = random(minimumZ, maximumZ);
+    width = random(minimumX, maximumX);
+    height = random(minimumY, maximumY);
+    depth = random(minimumZ, maximumZ);
 
-    loc = road.getRandomLocation(w, h);                                                    //gebaseerd op oefenzitting 4
+    loc = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
 
     calculateBoundaries();
     checkPark();
@@ -44,12 +41,12 @@ class Building {
 
   void calculateBoundaries() {                                                             //gebaseerd op oefenzitting 4
     
-    minX = loc.x - w/2;
-    maxX = loc.x + w/2;
-    minY = loc.y - h/2;
-    maxY = loc.y + h/2;
-    minZ = loc.z - d/2;
-    maxZ = loc.z + d/2;
+    minX = loc.x - width/2;
+    maxX = loc.x + width/2;
+    minY = loc.y - height/2;
+    maxY = loc.y + height/2;
+    minZ = loc.z - depth/2;
+    maxZ = loc.z + depth/2;
   }
 
 
@@ -105,7 +102,7 @@ class Building {
       
       float distance = dist(this.loc.x, this.loc.y, newBuilding.loc.x, newBuilding.loc.y); //formule uit Nature of code
       
-      if (distance < h) {
+      if (distance < height) {
         
         touching = true;
       } 
@@ -125,7 +122,7 @@ class Building {
     
     while (park.isInside(minX, minY)||park.isInside(minX, maxY)||park.isInside(maxX, minY)||park.isInside(minX, minY)) {
       
-      loc = road.getRandomLocation(w, h);
+      loc = road.getRandomLocation(width, height);
       
       calculateBoundaries();
     }
@@ -139,14 +136,14 @@ class Building {
       
       if (checkInside(c)) {
         
-        if (d< 200) {
+        if (depth< 200) {
           
-          d +=0.04;
+          depth +=0.04;
         } 
         
         else {
           
-          d= 200;
+          depth= 200;
         }
       }
     }
@@ -155,7 +152,7 @@ class Building {
       
       if (checkTouching(b)) {
         
-        loc = road.getRandomLocation(w, h);
+        loc = road.getRandomLocation(width, height);
         
         calculateBoundaries();
       }
@@ -168,7 +165,7 @@ class Building {
     pushMatrix();                        //gebaseerd op hoorcollege 7 
 
     translate(loc.x, loc.y, d/2);          
-    box(w, h, d);
+    box(width, height, depth);
     popMatrix();
   }
 }
