@@ -57,11 +57,11 @@ class Building {
 
 
   boolean checkInside(Citizen citizen) {                                                         //gebaseerd op oefenzitting 4
-   
-    if (citizen.location.x > left && citizen.location.x < right &&
-      citizen.location.y > bottom && citizen.location.y < top &&
-      citizen.location.z > front && citizen.location.z < back) {
-      
+   boolean withinWidth = citizen.location.x > left && citizen.location.x < right ;
+   boolean withinHeight = citizen.location.y > bottom && citizen.location.y < top ;
+   boolean withinDepth = citizen.location.z > front && citizen.location.z < back ;
+
+    if (withinWidth && withinHeight && withinDepth) {
         return true;
     }
     
