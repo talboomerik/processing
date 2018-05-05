@@ -1,6 +1,6 @@
 class Building {
 
-  PVector location;
+  PVector centerOfBuilding;
 
   float width;
   float height;
@@ -27,7 +27,7 @@ class Building {
 
   Building() {
     setDimensionsOfBuilding();
-    setLocation();
+    setcenterOfBuilding();
     setColor();
   }
 
@@ -37,9 +37,9 @@ class Building {
     depth = random(minimumDepth, maximumDepth);
   }
 
-  void setLocation() {
+  void setcenterOfBuilding() {
     while (overlapWithPark()) {
-      location = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
+      centerOfBuilding = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
       calculateBoundaries();
     }
   }
@@ -49,12 +49,12 @@ class Building {
   }
 
   void calculateBoundaries() {                                                             //gebaseerd op oefenzitting 4
-    minX = location.x - width/2;
-    maxX = location.x + width/2;
-    minY = location.y - height/2;
-    maxY = location.y + height/2;
-    minZ = location.z - depth/2;
-    maxZ = location.z + depth/2;
+    minX = centerOfBuilding.x - width/2;
+    maxX = centerOfBuilding.x + width/2;
+    minY = centerOfBuilding.y - height/2;
+    maxY = centerOfBuilding.y + height/2;
+    minZ = centerOfBuilding.z - depth/2;
+    maxZ = centerOfBuilding.z + depth/2;
   }
 
 
@@ -107,7 +107,7 @@ class Building {
       
       Building newBuilding = building;
       
-      float distance = dist(this.location.x, this.location.y, newBuilding.location.x, newBuilding.location.y); //formule uit Nature of code
+      float distance = dist(this.centerOfBuilding.x, this.centerOfBuilding.y, newBuilding.centerOfBuilding.x, newBuilding.centerOfBuilding.y); //formule uit Nature of code
       
       if (distance < height) {
         
@@ -149,7 +149,7 @@ class Building {
       
       if (checkTouching(b)) {
         
-        location = road.getRandomLocation(width, height);
+        centerOfBuilding = road.getRandomLocation(width, height);
         
         calculateBoundaries();
       }
@@ -161,7 +161,7 @@ class Building {
     strokeWeight(1);
     pushMatrix();                        //gebaseerd op hoorcollege 7 
 
-    translate(location.x, location.y, depth/2);
+    translate(centerOfBuilding.x, centerOfBuilding.y, depth/2);
     box(width, height, depth);
     popMatrix();
   }
