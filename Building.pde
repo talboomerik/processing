@@ -27,7 +27,7 @@ class Building {
 
   Building() {
     setDimensionsOfBuilding();
-    setcenterOfBuilding();
+    setCenterOfBuilding();
     setColors();
   }
 
@@ -37,7 +37,7 @@ class Building {
     depth = random(minimumDepth, maximumDepth);
   }
 
-  void setcenterOfBuilding() {
+  void setCenterOfBuilding() {
     while (overlapWithPark()) {
       centerOfBuilding = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
       calculateBoundaries();
