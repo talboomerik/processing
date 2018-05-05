@@ -131,9 +131,9 @@ class Building {
       }
     }
 
-    for (Building b : buildings) {
+    for (Building building : buildings) {
       
-      if (checkTouching(b)) {
+      if (checkTouching(building)) {
         
         centerOfBuilding = road.getRandomLocation(width, height);
         
