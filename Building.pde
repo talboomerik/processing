@@ -28,7 +28,7 @@ class Building {
   Building() {
     setDimensionsOfBuilding();
     setcenterOfBuilding();
-    setColor();
+    setColors();
   }
 
   void setDimensionsOfBuilding() {
@@ -74,7 +74,7 @@ class Building {
 
 
 
-  void setColor() {                                                                       //inspiratie uit inleiding Nature of code
+  void setColors() {                                                                       //inspiratie uit inleiding Nature of code
     
     float r = random(1);
     
