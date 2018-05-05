@@ -2,16 +2,18 @@ class Building {
 
   PVector centerOfBuilding;
 
-  float width;
-  float height;
-  float depth;
-
   float minimumWidth = 40;
   float maximumWidth = 60;
   float minimumHeight = 60;
   float maximumHeight = 80;
   float minimumDepth = 80;
   float maximumDepth = 100;
+  float growthFactor = 0.04;
+  float maximumCapacity = 200;
+
+  float width;
+  float height;
+  float depth;
 
   float left;
   float right;
@@ -105,11 +107,11 @@ class Building {
   void updateCapacity() {
     for (Citizen citizen : citizens) {
       if (checkInside(citizen)) {
-        if (depth < 200) {
-            depth += 0.04;
+        if (depth < maximumCapacity) {
+            depth += growthFactor;
         }
         else {
-            depth= 200;
+            depth= maximumCapacity;
         }
       }
     }
