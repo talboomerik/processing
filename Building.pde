@@ -86,7 +86,7 @@ class Building {
     }
   }
 
-
+  //this can be moved to road, is not behaviour of a building but of a road
   boolean checkTouching(Building otherBuilding) {
     touching = false;
 
@@ -121,6 +121,7 @@ class Building {
     
     updateCapacity();
 
+    //this can be moved to road, is not behaviour of a building but of a road
     for (Building building : buildings) {
       
       if (checkTouching(building)) {
