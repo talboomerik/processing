@@ -13,12 +13,12 @@ class Building {
   float minimumDepth = 80;
   float maximumDepth = 100;
 
-  float minX;
-  float maxX;
-  float minY;
-  float maxY;
-  float minZ;
-  float maxZ;
+  float left;
+  float right;
+  float bottom;
+  float top;
+  float front;
+  float back;
 
   boolean citizenInBuilding;
 
@@ -45,16 +45,16 @@ class Building {
   }
 
   void overlapWithPark() {                                                                      //gebaseerd op hoorcollege 6
-    return (park.isInside(minX, minY)||park.isInside(minX, maxY)||park.isInside(maxX, minY)||park.isInside(minX, minY));
+    return (park.isInside(left, bottom)||park.isInside(left, top)||park.isInside(right, bottom)||park.isInside(left, bottom));
   }
 
   void calculateBoundaries() {                                                             //gebaseerd op oefenzitting 4
-    minX = centerOfBuilding.x - width/2;
-    maxX = centerOfBuilding.x + width/2;
-    minY = centerOfBuilding.y - height/2;
-    maxY = centerOfBuilding.y + height/2;
-    minZ = centerOfBuilding.z - depth/2;
-    maxZ = centerOfBuilding.z + depth/2;
+    left = centerOfBuilding.x - width/2;
+    right = centerOfBuilding.x + width/2;
+    bottom = centerOfBuilding.y - height/2;
+    top = centerOfBuilding.y + height/2;
+    front = centerOfBuilding.z - depth/2;
+    back = centerOfBuilding.z + depth/2;
   }
 
 
@@ -62,9 +62,9 @@ class Building {
     
     citizenInBuilding = false; 
    
-    if (citizen.location.x > minX && citizen.location.x < maxX &&
-      citizen.location.y > minY && citizen.location.y < maxY &&
-      citizen.location.z > minZ && citizen.location.z < maxZ) {
+    if (citizen.location.x > left && citizen.location.x < right &&
+      citizen.location.y > bottom && citizen.location.y < top &&
+      citizen.location.z > front && citizen.location.z < back) {
       
         citizenInBuilding = true;
     }
