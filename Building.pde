@@ -1,6 +1,6 @@
 class Building {
 
-  PVector loc;
+  PVector location;
 
   float width;
   float height;
@@ -26,27 +26,30 @@ class Building {
   color s;
 
   Building() {
+    setDimensionsOfBuilding();
 
-    width = random(minimumX, maximumX);
-    height = random(minimumY, maximumY);
-    depth = random(minimumZ, maximumZ);
-
-    loc = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
+    location = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
 
     calculateBoundaries();
     checkPark();
     setColor();
   }
 
+  void setDimensionsOfBuilding() {
+    width = random(minimumX, maximumX);
+    height = random(minimumY, maximumY);
+    depth = random(minimumZ, maximumZ);
+  }
+
 
   void calculateBoundaries() {                                                             //gebaseerd op oefenzitting 4
     
-    minX = loc.x - width/2;
-    maxX = loc.x + width/2;
-    minY = loc.y - height/2;
-    maxY = loc.y + height/2;
-    minZ = loc.z - depth/2;
-    maxZ = loc.z + depth/2;
+    minX = location.x - width/2;
+    maxX = location.x + width/2;
+    minY = location.y - height/2;
+    maxY = location.y + height/2;
+    minZ = location.z - depth/2;
+    maxZ = location.z + depth/2;
   }
 
 
@@ -55,9 +58,9 @@ class Building {
     
     citizenInBuilding = false; 
    
-    if (c.loc.x > minX && c.loc.x < maxX &&
-      c.loc.y > minY && c.loc.y < maxY &&
-      c.loc.z > minZ && c.loc.z < maxZ) {
+    if (c.location.x > minX && c.location.x < maxX &&
+      c.location.y > minY && c.location.y < maxY &&
+      c.location.z > minZ && c.location.z < maxZ) {
       
         citizenInBuilding = true;
     }
@@ -100,7 +103,7 @@ class Building {
       
       Building newBuilding = building;
       
-      float distance = dist(this.loc.x, this.loc.y, newBuilding.loc.x, newBuilding.loc.y); //formule uit Nature of code
+      float distance = dist(this.location.x, this.location.y, newBuilding.location.x, newBuilding.location.y); //formule uit Nature of code
       
       if (distance < height) {
         
@@ -122,7 +125,7 @@ class Building {
     
     while (park.isInside(minX, minY)||park.isInside(minX, maxY)||park.isInside(maxX, minY)||park.isInside(minX, minY)) {
       
-      loc = road.getRandomLocation(width, height);
+      location = road.getRandomLocation(width, height);
       
       calculateBoundaries();
     }
@@ -152,7 +155,7 @@ class Building {
       
       if (checkTouching(b)) {
         
-        loc = road.getRandomLocation(width, height);
+        location = road.getRandomLocation(width, height);
         
         calculateBoundaries();
       }
