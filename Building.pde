@@ -6,12 +6,12 @@ class Building {
   float height;
   float depth;
 
-  float minimumX = 40;
-  float maximumX = 60;
-  float minimumY = 60;
-  float maximumY = 80;
-  float minimumZ = 80;
-  float maximumZ = 100;
+  float minimumWidth = 40;
+  float maximumWidth = 60;
+  float minimumHeight = 60;
+  float maximumHeight = 80;
+  float minimumDepth = 80;
+  float maximumDepth = 100;
 
   float minX;
   float maxX;
@@ -32,9 +32,9 @@ class Building {
   }
 
   void setDimensionsOfBuilding() {
-    width = random(minimumX, maximumX);
-    height = random(minimumY, maximumY);
-    depth = random(minimumZ, maximumZ);
+    width = random(minimumWidth, maximumWidth);
+    height = random(minimumHeight, maximumHeight);
+    depth = random(minimumDepth, maximumDepth);
   }
 
   void setLocation() {
