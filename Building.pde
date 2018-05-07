@@ -1,145 +1,104 @@
-class Building {
+class Building extends Box{                                                //subklasse building
 
-  PVector centerOfBuilding;
-
-  float minimumWidth = 40;
-  float maximumWidth = 60;
-  float minimumHeight = 60;
-  float maximumHeight = 80;
-  float minimumDepth = 80;
-  float maximumDepth = 100;
-  float growthFactor = 0.04;
-  float maximumCapacity = 200;
-
-  float width;
-  float height;
-  float depth;
-
-  float left;
-  float right;
-  float bottom;
-  float top;
-  float front;
-  float back;
-
-  color fillColor;
-  color borderColor;
-
-  Building() {
+  float minimumWidth;                                                      //variatie afmetingen gebouwen 
+  float maximumWidth;
+  float minimumHeight;
+  float maximumHeight;
+  float minimumDepth;
+  float maximumDepth;
+  
+  float growthFactor;                                                      //bepaalt hoe snel de gebouwen groeien
+  float maximumCapacity;                                                   //maximum hoogte gebouw
+  
+  boolean touching;
+  
+  Building() {                                                             //erft de constructor van box over 
+    growthFactor = 0.04;
+    maximumCapacity = 200;
     setDimensionsOfBuilding();
     setCenterOfBuilding();
-    setColors();
-  }
 
-  void setDimensionsOfBuilding() {
+
+
+  }
+  void setDimensionsOfBuilding() {                                         //stelt de afmetingen van de gebouwen in
     width = random(minimumWidth, maximumWidth);
     height = random(minimumHeight, maximumHeight);
     depth = random(minimumDepth, maximumDepth);
   }
+  
+  boolean overlapWithPark() {                                              //gebaseerd op hoorcollege 6; controleert of er een gebouw in het park staat 
+    return (park.isInside(left, bottom)
+      ||park.isInside(left, top)
+      ||park.isInside(right, bottom)
+      ||park.isInside(left, bottom));
+  }
 
-  void setCenterOfBuilding() {
-    while (overlapWithPark()) {
-      centerOfBuilding = road.getRandomLocation(width, height);                                                    //gebaseerd op oefenzitting 4
+  void setCenterOfBuilding() {                                             //?
+    centerOfBox = world.getRandomLocation(width, height);                                                   
+    calculateBoundaries();
+    if (overlapWithPark()) {
+      centerOfBox = world.getRandomLocation(width, height);                                    
       calculateBoundaries();
     }
   }
 
-  void overlapWithPark() {                                                                      //gebaseerd op hoorcollege 6
-    return (park.isInside(left, bottom)||park.isInside(left, top)||park.isInside(right, bottom)||park.isInside(left, bottom));
-  }
-
-  void calculateBoundaries() {                                                             //gebaseerd op oefenzitting 4
-    left = centerOfBuilding.x - width/2;
-    right = centerOfBuilding.x + width/2;
-    bottom = centerOfBuilding.y - height/2;
-    top = centerOfBuilding.y + height/2;
-    front = centerOfBuilding.z - depth/2;
-    back = centerOfBuilding.z + depth/2;
-  }
 
 
-  boolean checkInside(Citizen citizen) {                                                         //gebaseerd op oefenzitting 4
-    boolean withinWidth = citizen.location.x > left && citizen.location.x < right ;
-    boolean withinHeight = citizen.location.y > bottom && citizen.location.y < top ;
-    boolean withinDepth = citizen.location.z > front && citizen.location.z < back ;
+  boolean checkInside(Citizen citizen) {                                  //gebaseerd op oefenzitting 4; controleert of er zich een burger in een gebouw bevindt 
+    boolean withinWidth = citizen.loc.x > left && citizen.loc.x < right ;
+    boolean withinHeight = citizen.loc.y > bottom && citizen.loc.y < top ;
+    boolean withinDepth = citizen.loc.z > front && citizen.loc.z < back ;
 
     return (withinWidth && withinHeight && withinDepth);
   }
 
 
-  void setColors() {                                                                       //inspiratie uit inleiding Nature of code
-    float r = random(1);
-    
-    if (r<0.4) {
-      fillColor = #BABAC4;
-      borderColor = #7E797A;
-    } 
-    
-    else if (r<0.6) {
-      fillColor = #ff0000;
-      borderColor = #902931;
-    } 
-    
-    else {
-      fillColor = #2C20E3;
-      borderColor = #3A3676;
-    }
-  }
 
-  //this can be moved to road, is not behaviour of a building but of a road
-  boolean checkTouching(Building otherBuilding) {
+  //this can be moved to world, is not behaviour of a building but of a world
+  boolean checkTouching(Building otherBuilding) {                        //controleert of gebouwen elkaar aanraken 
     touching = false;
 
-    if (building != this) {
-      float distance = dist(this.centerOfBuilding.x, this.centerOfBuilding.y, otherBuilding.centerOfBuilding.x, otherBuilding.centerOfBuilding.y); //formule uit Nature of code
-      
+    if (otherBuilding != this) {
+      float distance = dist(this.centerOfBox.x, this.centerOfBox.y, otherBuilding.centerOfBox.x, otherBuilding.centerOfBox.y); //formule uit Nature of code
+
       if (distance < height) {
         touching = true;
-      } 
-      
-      else {
+      } else {
         touching = false;
       }
     }
     return touching;
   }
 
-  void updateCapacity() {
+  void updateCapacity() {                                                //indien er zich agenten in een gebouw bevinden gaat de capaciteit van het gebouw gaan groeien met snelheid growthFactor tot de maximumCapacity bereikt is
     for (Citizen citizen : citizens) {
       if (checkInside(citizen)) {
         if (depth < maximumCapacity) {
-            depth += growthFactor;
-        }
-        else {
-            depth= maximumCapacity;
+          depth += growthFactor;
+        } else {
+          depth= maximumCapacity;
         }
       }
     }
   }
 
-  void render() {
-    
-    updateCapacity();
+  void render() {  
+    super.render();                                                    //de render van box wordt overgeerfd
+    updateCapacity();  
 
-    //this can be moved to road, is not behaviour of a building but of a road
+    //this can be moved to world, is not behaviour of a building but of a world
     for (Building building : buildings) {
-      
+
       if (checkTouching(building)) {
-        
-        centerOfBuilding = road.getRandomLocation(width, height);
-        
+
+        centerOfBox = world.getRandomLocation(width, height);
+
         calculateBoundaries();
       }
     }
 
 
-    fill(fillColor);
-    stroke(borderColor);
-    strokeWeight(1);
-    pushMatrix();                        //gebaseerd op hoorcollege 7 
-
-    translate(centerOfBuilding.x, centerOfBuilding.y, depth/2);
-    box(width, height, depth);
-    popMatrix();
+   
   }
 }

@@ -3,21 +3,21 @@ void setupGUI() {                        //gebaseerd op oefenzitting 4
   control = new ControlP5(this);
   control.setAutoDraw(false);
   
-  control.addSlider("roadWidth")
-         .setRange(600, 1200)
-         .setValue(1000)
+  control.addSlider("distanceOfAttraction")
+         .setRange(5, 100)
+         .setValue(20)
          .setSize(100,20)
          .setPosition(20,20);
          
-  control.addSlider("roadHeight")
-         .setRange(600, 1200)
-         .setValue(1000)
+  control.addSlider("AttractionBuilding")
+         .setRange(0.5, 10)
+         .setValue(1)
          .setSize(100, 20)
          .setPosition(200, 20);
          
-  control.addSlider("roadDepth")
-         .setRange(5, 20)
-         .setValue(10)
+  control.addSlider("AttractionCitizen")
+         .setRange(0.5, 10)
+         .setValue(2.5)
          .setSize(100,20)
          .setPosition(400, 20);
          
@@ -57,28 +57,20 @@ void setupGUI() {                        //gebaseerd op oefenzitting 4
     camera.endHUD();
   }
   
-  
-  void roadWidth(float value) {             //gebaseerd op oefenzitting 4
- 
-    road.setWidth( value );
-    setupCitizen();
-    setupBuildings();
-    setupTrees();
-  }
-  
-  
-  
-  void roadHeight(float value){
     
-    road.setHeight( value );
-    setupCitizen();
-    setupBuildings();
-    setupTrees();
-
+  void keyPressed() {     //uit Syllabus
+    
+    if (key=='s') {
+      saveFrame("image/my-drawing-#####.png");      
+      println("frame saved");
+    }
+  
+    if (key=='t' || key == 'T') {
+      setupTrees();
+    }
+    
+    if(key =='b' || key =='b') {
+      setupBuildings();
+      setupCitizen();
+    } 
   }
-
-         
-
-
-
-         

@@ -6,12 +6,17 @@ class Citizen {
   PVector vel;
   PVector acc;
   
-  float r;
+  float distanceOfAttraction = 22;
   
   float maxForce;
   float maxSpeed;
   
+  float AttractionBuilding=1;
+  float AttractionCitizen=2.7;
+  
   boolean citizenInPark;
+  
+  PVector bui;
   
   Citizen(float x, float y) {
     
@@ -20,7 +25,9 @@ class Citizen {
     acc = new PVector(0, 0);
     maxSpeed = 2;
     maxForce = 0.1;
-    r=20;
+    //distanceOfAttraction = 30;
+    //AttractionBuilding = 1;
+    //AttractionCitizen = 2.7;
   }
 
 
@@ -33,12 +40,12 @@ class Citizen {
 
     history.add(loc.get());                                        //gebaseerd op Nature of Code
 
-    if (loc.x < road.minX || loc.x > road.maxX) {
+    if (loc.x < world.left || loc.x > world.right) {
       
       vel.x *= -1;
     }
 
-    if (loc.y < road.minY || loc.y > road.maxY) {
+    if (loc.y < world.bottom || loc.y > world.top) {
       
       vel.y *= -1;
     }
@@ -52,15 +59,15 @@ class Citizen {
     acc.add(force);
   }
   
-  void applyBehaviors(ArrayList<Citizen> citizens) {              //gebaseerd op Nature of Code
+  void applyBehaviors(ArrayList <Citizen> citizens) {              //gebaseerd op Nature of Code
      
      PVector attractionForce = attract(citizens);
      Building a = buildings.get((int)random(0,buildings.size()));
-     bui= new PVector(a.loc.x, a.loc.y);
+     bui= new PVector(a.centerOfBox.x, a.centerOfBox.y);
      
      PVector arriveForce = arrive(bui);
-     attractionForce.mult(2.5);
-     arriveForce.mult(1);
+     attractionForce.mult(AttractionCitizen);
+     arriveForce.mult(AttractionBuilding);
      
      applyForce(attractionForce);
      applyForce(arriveForce);  
@@ -119,12 +126,12 @@ class Citizen {
       
       if (build.checkInside(c)) {
         
-        if ((c.loc.x >= build.minX && c.loc.x <= build.minX +5) || (c.loc.x<=build.maxX && c.loc.x>=build.maxX-5)) {
+        if ((c.loc.x >= build.left && c.loc.x <= build.left +5) || (c.loc.x<=build.right && c.loc.x>=build.right-5)) {
           
           c.vel.x*=-7/6;
         }
         
-        if ((c.loc.y >= build.minY && c.loc.y <= build.minY +5) || (c.loc.y<=build.maxY && c.loc.y>=build.maxY-5)) {
+        if ((c.loc.y >= build.bottom && c.loc.y <= build.bottom +5) || (c.loc.y<=build.top && c.loc.y>=build.top-5)) {
           
           c.vel.y*=-7/6;
         }
@@ -134,9 +141,9 @@ class Citizen {
 
 
   
-  PVector attract (ArrayList<Citizen> citizens) {                 //gebaseerd op Nature of Code
+  PVector attract (ArrayList <Citizen> citizens) {                 //gebaseerd op Nature of Code
     
-    float desiredattraction = r*2;
+    float desiredattraction = distanceOfAttraction*2;
     PVector sum = new PVector();
     int count = 0;
 
@@ -172,10 +179,10 @@ class Citizen {
   void checkPark(Citizen c) {                          //gebaseerd op hoorcollege 6
       
       if (park.checkInside(c)) {
-        if ((c.loc.x >= park.minX && c.loc.x <= park.minX+2) || (c.loc.x<=park.maxX && c.loc.x>=park.maxX-2)) {
+        if ((c.loc.x >= park.left && c.loc.x <= park.left+2) || (c.loc.x<=park.right && c.loc.x>=park.right-2)) {
           c.vel.x*=-4;
         }
-        if ((c.loc.y >= park.minY && c.loc.y <= park.minY+2) || (c.loc.y<=park.maxY && c.loc.y>=park.maxY-2)) {
+        if ((c.loc.y >= park.bottom && c.loc.y <= park.bottom+2) || (c.loc.y<=park.top && c.loc.y>=park.top-2)) {
           c.vel.y*=-4;
         }
       }
